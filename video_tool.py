@@ -14,6 +14,8 @@ def download_video(video_url):
 
 
 def upload_video(name):
+    headers = {'Content-Type': 'application/octet-stream'}
+    with open(name, 'rb') as file:
+        file_content = file.read()
     url = f'http://router.wxioi.fun:4002/api/v1/fs/mnt/fs/Data/Video/{name}'
-    files = {'file': (name, open(name, 'rb'))}
-    requests.put(url, files=files)
+    return requests.put(url, data=file_content, headers=headers)
